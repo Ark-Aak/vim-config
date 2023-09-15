@@ -3,7 +3,7 @@ set nocompatible
 set backspace=indent,eol,start
 set number
 set nobackup  
-set noswapfile 
+set noswapfile
 set mouse=a
 set guifont=Consolas:h16
 set showmatch   
@@ -15,8 +15,8 @@ set smartindent
 syntax enable
 syntax on
 filetype plugin on
-" let g:vim_markdown_folding_disabled = 1			   " 禁用 Markdown 自动折叠
-let g:vim_markdown_math = 1						   " 启用 LaTeX 支持
+" let g:vim_markdown_folding_disabled = 1              " 禁用 Markdown 自动折叠
+let g:vim_markdown_math = 1                            " 启用 LaTeX 支持
 call plug#begin('~/.vim/plugged')
 	Plug 'chxuan/vimplus-startify'                 " 启动界面
 	Plug 'scrooloose/nerdtree'                     " 目录树
@@ -28,11 +28,11 @@ call plug#begin('~/.vim/plugged')
 	Plug 'Lokaltog/vim-easymotion'                 " 快速跳转
 	Plug 'yianwillis/vimcdoc'                      " HELP 文档中文
 	Plug 'jacoborus/tender.vim'                    " 配色方案
-"	Plug 'jiangmiao/auto-pairs'					   " 自动补全
+"	Plug 'jiangmiao/auto-pairs'                    " 自动补全
 	Plug 'tribela/vim-transparent'
 	Plug 'rhysd/vim-clang-format'                  " clang-format 代码格式化
-	Plug 'godlygeek/tabular'					   " vim-markdown 前置
-	Plug 'preservim/vim-markdown'				   " Markdown 支持
+	Plug 'godlygeek/tabular'                       " vim-markdown 前置
+	Plug 'preservim/vim-markdown'                  " Markdown 支持
 	Plug 'pangloss/vim-javascript'                 " JavaScript 支持
 call plug#end()
 nnoremap <C-i> :PlugInstall<CR>
@@ -54,18 +54,18 @@ func! CompileWithGpp()
     exec '!g++ "%" -o "%<" -std=c++14 -Wall -O2 -DLOCAL'
 endfunc
 func! Init()
-	if &term == 'win32'
-		exec '!copy /Y /A ..\foo.cpp "%"'
-	else
-		exec '!cp ..\foo.cpp "%"'
-	endif
+    if &term == 'win32'
+        exec '!copy /Y /A ..\foo.cpp "%"'
+    else
+        exec '!cp ..\foo.cpp "%"'
+    endif
 endfunc
 func! Run()
-	if &term == 'win32'
-		exec '! "%<.exe"'
-	else
-		exec '! "./%<"'
-	endif
+    if &term == 'win32'
+        exec '! "%<.exe"'
+    else
+        exec '! "./%<"'
+    endif
 endfunc
 func! SaveFile()
 	exec "w"
