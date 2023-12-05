@@ -27,7 +27,7 @@ set omnifunc=ale#completion#OmniFunc
 let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '->'
-let g:ale_cpp_cc_options = '-std=c++17 -O2 -DLOCAL -static -Wall -Wl,--stack=51200000000'
+let g:ale_cpp_cc_options = '-std=c++17 -O2 -static -Wall -Wl,--stack=51200000000'
 call plug#begin('~/.vim/plugged')
 	Plug 'chxuan/vimplus-startify'                 " 启动界面
 	Plug 'scrooloose/nerdtree'                     " 目录树
