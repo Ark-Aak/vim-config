@@ -22,9 +22,12 @@ let g:ale_fixers = {
 			\}
 let g:ale_fix_on_save = 1
 let g:instant_markdown_mathjax = 1
-let g:ale_completion_enabled = 1
-set omnifunc=ale#completion#OmniFunc
 let g:airline#extensions#ale#enabled = 1
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_filetype_changed = 0
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_text_changed = 0
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '->'
 let g:ale_cpp_cc_options = '-std=c++17 -O2 -static -Wall -Wl,--stack=51200000000'
@@ -46,7 +49,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'preservim/vim-markdown'                  " Markdown 支持
 	Plug 'pangloss/vim-javascript'                 " JavaScript 支持
 	Plug 'tpope/vim-fugitive'                      " Git 支持
-	Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'} " Mardown 即时渲染
+"	Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'} " Mardown 即时渲染
 call plug#end()
 nnoremap <C-i> :PlugInstall<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
@@ -126,4 +129,4 @@ if &term =~ 'xterm' || &term == 'win32'
 	let &t_EI = "\e[1 q"    " blink block
 	let &t_ti .= "\e[1 q"   " blink block
 	let &t_te .= "\e[0 q"   " default (depends on terminal, normally blink block)
-endif
+e
