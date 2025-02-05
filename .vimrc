@@ -49,19 +49,21 @@ call plug#begin('~/.vim/plugged')
 	Plug 'preservim/vim-markdown'                  " Markdown 支持
 	Plug 'pangloss/vim-javascript'                 " JavaScript 支持
 	Plug 'tpope/vim-fugitive'                      " Git 支持
+	" Plug 'github/copilot.vim'
 "	Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'} " Mardown 即时渲染
 call plug#end()
 nnoremap <C-i> :PlugInstall<CR>
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-k> :vsplit<CR>
+nnoremap <C-o> :NERDTreeToggle<CR>
 nnoremap <C-q> :q<CR>
-nnoremap <C-s> :call SaveFile()<CR>
 nnoremap <C-t> :term<CR>
 nnoremap <F6> :call CompileWithGpp()<CR>
 nnoremap <F7> :call Run()<CR>
 nnoremap <F8> :call CompileWithGpp()<CR> :call Run()<CR>
 nnoremap <F11> :call CompileWithGpp()<CR> :call Run()<CR>
 nnoremap <F3> :call Init()<CR>
+nnoremap <C-j> :tabn<CR>
+nnoremap <C-k> :tabp<CR>
+nnoremap <C-n> :tabnew<CR>
 nnoremap J 5j
 nnoremap K 5k
 nnoremap H 5h
@@ -85,13 +87,9 @@ func! Run()
 	if &term == 'win32'
 		exec '! "%<.exe"'
 	else
-		exec '! "./%<"'
+		exec '! ulimit -s unlimited && "./%<"'
 	endif
 endfunc
-func! SaveFile()
-	exec "w"
-endfunc
-nnoremap <F2> :call SaveFile()<CR>
 imap <UP> <Nop>
 imap <DOWN> <Nop>
 imap <LEFT> <Nop>
@@ -129,4 +127,4 @@ if &term =~ 'xterm' || &term == 'win32'
 	let &t_EI = "\e[1 q"    " blink block
 	let &t_ti .= "\e[1 q"   " blink block
 	let &t_te .= "\e[0 q"   " default (depends on terminal, normally blink block)
-e
+endif
