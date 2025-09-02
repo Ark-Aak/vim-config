@@ -21,13 +21,10 @@ let g:ale_fixers = {
 			\   '*': ['remove_trailing_lines', 'trim_whitespace']
 			\}
 let g:ale_fix_on_save = 1
+let g:ale_virtualtext_cursor = 0
 let g:instant_markdown_mathjax = 1
 let g:airline#extensions#ale#enabled = 1
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_filetype_changed = 0
 let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_text_changed = 0
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '->'
 let g:ale_cpp_cc_options = '-std=c++17 -O2 -static -Wall -Wl,--stack=51200000000'
@@ -49,21 +46,16 @@ call plug#begin('~/.vim/plugged')
 	Plug 'preservim/vim-markdown'                  " Markdown 支持
 	Plug 'pangloss/vim-javascript'                 " JavaScript 支持
 	Plug 'tpope/vim-fugitive'                      " Git 支持
-	" Plug 'github/copilot.vim'
-"	Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'} " Mardown 即时渲染
+	Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown', 'do': 'yarn install'} " Mardown 即时渲染
 call plug#end()
 nnoremap <C-i> :PlugInstall<CR>
-nnoremap <C-o> :NERDTreeToggle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-k> :vsplit<CR>
 nnoremap <C-q> :q<CR>
+nnoremap <C-s> :call SaveFile()<CR>
 nnoremap <C-t> :term<CR>
-nnoremap <F6> :call CompileWithGpp()<CR>
-nnoremap <F7> :call Run()<CR>
-nnoremap <F8> :call CompileWithGpp()<CR> :call Run()<CR>
-nnoremap <F11> :call CompileWithGpp()<CR> :call Run()<CR>
+nnoremap <F8> :call BuildAndRun()<CR>
 nnoremap <F3> :call Init()<CR>
-nnoremap <C-j> :tabn<CR>
-nnoremap <C-k> :tabp<CR>
-nnoremap <C-n> :tabnew<CR>
 nnoremap J 5j
 nnoremap K 5k
 nnoremap H 5h
@@ -72,10 +64,6 @@ vnoremap J 5j
 vnoremap K 5k
 vnoremap H 5h
 vnoremap L 5l
-func! CompileWithGpp()
-	exec "w"
-	exec '!g++ "%" -o "%<" -std=c++17 -O2 -DLOCAL -Wall -static -Wl,--stack=512000000'
-endfunc
 func! Init()
 	if &term == 'win32'
 		exec '!copy /Y /A ..\foo.cpp "%"'
@@ -83,13 +71,27 @@ func! Init()
 		exec '!cp ../foo.cpp "%"'
 	endif
 endfunc
-func! Run()
-	if &term == 'win32'
-		exec '! "%<.exe"'
-	else
-		exec '! ulimit -s unlimited && "./%<"'
-	endif
+func! BuildAndRun()
+    exec "w"
+    if &filetype ==# 'cpp'
+        exec '!g++ "%" -o "%<" -std=c++17 -O2 -DLOCAL -Wall -static -Wl,--stack=512000000'
+        if &term == 'win32'
+            exec '! "%<.exe"'
+        else
+            exec '! "./%<"'
+        endif
+    elseif &filetype ==# 'python'
+        exec '!python3 "%"'
+    elseif &filetype ==# 'javascript'
+        exec '!node "%"'
+    else
+        echo "不支持的文件类型: " . &filetype
+    endif
 endfunc
+func! SaveFile()
+	exec "w"
+endfunc
+nnoremap <F2> :call SaveFile()<CR>
 imap <UP> <Nop>
 imap <DOWN> <Nop>
 imap <LEFT> <Nop>
